@@ -7,14 +7,17 @@ var ship = {
   angle: 0,
   element: document.getElementById("ship")
 }
+ship.element.style.top = "500px";
+ship.element.style.left = "500px";
 
+var asteroids = [];
+// var asteroidPosition = x[i].getBoundingClientRect();
+// var shipPosition = ship.element.getBoundingClientRect();
 
-    /* your ship element */ship.element.addEventListener('asteroidDetected', function (event) {
+ship.element.addEventListener('asteroidDetected', function (event) {
         // You can detect when a new asteroid appears with this event.
         // The new HTML element will be in event.detail
-
-        // What might you need/want to do in here?
-
+        asteroids.push(event.detail);
     });
 
     /**
@@ -56,11 +59,11 @@ var ship = {
         }
         if (event.keyCode === 39){
           ship.angle = ship.angle + 15;
+          ship.element.style.transform = "rotate(" + ship.angle + "deg)"
           console.log(ship.angle);
         }
-        // Implement me!
+  }
 
-    }
     document.querySelector('body').addEventListener('keyup', handleKeys);
 
     /**
@@ -70,7 +73,7 @@ var ship = {
      * return {void}
      */
     document.querySelector('main').addEventListener('crash', function () {
-
+      ship.velocity = 0;
         // What might you need/want to do in here?
 
     });
@@ -86,13 +89,16 @@ var ship = {
     function gameLoop() {
         // This function for getting ship movement is given to you (at the bottom).
         // NOTE: you will need to change these arguments to match your ship object!
-        // var move = getShipMovement(shipsCurrentVelocity, shipsCurrentAngle);
-
+        var move = getShipMovement(ship.velocity, ship.angle);
+        // console.log(move.top);
+        ship.element.style.top = (parseInt(ship.element.style.top) - move.top) + "px";
+        ship.element.style.left = (parseInt(ship.element.style.left) + move.left) + "px";
+        // ship.element.style.left = left + move.left
         // Move the ship!
 
 
         // Time to check for any collisions (see below)...
-        checkForCollisions();
+        checkForCollisions(ship.element.getBoundingClientRect(), asteroids);
     }
 
     /**
@@ -110,9 +116,19 @@ var ship = {
      * @return void
      */
     function checkForCollisions() {
+      var shipPosition = ship.element.getBoundingClientRect();
 
-        // Implement me!
+      for (var i = 0; i < asteroids.length; i++) {
+        var asteroidPosition = asteroids[i].getBoundingClientRect();
 
+        if (!(asteroidPosition.left > shipPosition.right||
+          asteroidPosition.right < shipPosition.left||
+          asteroidPosition.top > shipPosition.bottom||
+          asteroidPosition.bottom < shipPosition.top)) {
+            crash(asteroids[i]);
+          }
+
+        }
     }
 
 
