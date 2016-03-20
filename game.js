@@ -33,14 +33,14 @@ ship.element.addEventListener('asteroidDetected', function (event) {
      * @return {void}          In other words, no need to return anything
      */
     function handleKeys(event) {
-        console.log(event.keyCode);
+        // console.log(event.keyCode);
         if (event.keyCode === 38){
           if (ship.velocity >= 10){
             ship.velocity = 10;
-            console.log(ship.velocity);
+            // console.log(ship.velocity);
           } else {
           ship.velocity = ship.velocity + 1;
-          console.log(ship.velocity);
+          // console.log(ship.velocity);
           }
         }
         if (event.keyCode === 40){
@@ -48,19 +48,19 @@ ship.element.addEventListener('asteroidDetected', function (event) {
             ship.velocity = 0;
           } else {
           ship.velocity = ship.velocity - 1;
-          console.log(ship.velocity);
+          // console.log(ship.velocity);
           }
         }
         if (event.keyCode === 37){
           ship.angle = ship.angle - 15;
           ship.element.style.transform = "rotate(" + ship.angle + "deg)"
-          console.log(ship.element.style.transform);
-          console.log(ship.angle);
+          // console.log(ship.element.style.transform);
+          // console.log(ship.angle);
         }
         if (event.keyCode === 39){
           ship.angle = ship.angle + 15;
           ship.element.style.transform = "rotate(" + ship.angle + "deg)"
-          console.log(ship.angle);
+          // console.log(ship.angle);
         }
   }
 
